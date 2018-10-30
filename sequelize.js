@@ -25,10 +25,15 @@ Blog.belongsToMany(Tag, { through: BlogTag, unique: false })
 Tag.belongsToMany(Blog, { through: BlogTag, unique: false })
 Blog.belongsTo(User);
 
-sequelize.sync({ force: true })
+sequelize.sync() // { force: true } forces to drop existing tables.
   .then(() => {
     console.log(`Database & tables created!`)
   })
+  .error(function(error) {
+    console.log('- error \n', error);
+  })
+
+// sequelize.drop() // drops all the tables
 
 module.exports = {
   User,
